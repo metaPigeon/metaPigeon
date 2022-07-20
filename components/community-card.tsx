@@ -2,8 +2,13 @@ import { Box, Text, HStack, SimpleGrid } from '@chakra-ui/react'
 import * as React from 'react'
 import DiscordIcon from './docs/discord-logo'
 import { FaTwitter } from 'react-icons/fa'
-
-function CommunityCardItem({ children, accentColor, icon, href }) {
+// eslint-disable-next-line
+function CommunityCardItem({ children, accentColor, icon, href }: {
+  children: React.ReactNode,
+  accentColor: any,
+  icon: any,
+  href: any
+}) {
   return (
     <HStack
       as='a'

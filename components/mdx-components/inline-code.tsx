@@ -11,7 +11,7 @@ export const InlineCode = (props: HTMLChakraProps<'code'>) => {
    * before the layout shifts to mobile.
    */
   const MIN_CONTENT_WIDTH = 363
-  const shouldWrap = dimensions?.borderBox.width > MIN_CONTENT_WIDTH
+  const shouldWrap = dimensions!?.borderBox?.width  > MIN_CONTENT_WIDTH
 
   return (
     <chakra.code

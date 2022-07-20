@@ -20,7 +20,7 @@ import {
 import Lorem from 'react-lorem-component'
 import * as Loaders from 'react-spinners'
 import * as ReactTable from 'react-table'
-import CircleIcon from '../icon.tsx'
+import CircleIcon from '../icon'
 
 const reactIcons = {
   MdSettings,

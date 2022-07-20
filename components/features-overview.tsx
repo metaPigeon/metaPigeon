@@ -25,7 +25,7 @@ const featureSidebar = {
   '/docs/components': componentsSidebar,
 }
 
-const Feature = ({ title, icon, children, ...props }) => {
+const Feature:React.FC<any> = ({ title, icon, children, ...props }) => {
   return (
     <Stack
       direction='row'
@@ -63,7 +63,7 @@ const Feature = ({ title, icon, children, ...props }) => {
 export const FeaturesOverview = () => {
   const { asPath } = useRouter()
 
-  const features = featureSidebar[asPath].routes?.[0].routes.filter(
+  const features = featureSidebar[asPath as keyof typeof featureSidebar]?.routes?.[0].routes.filter(
     (feature) => feature.path !== asPath,
   )
 
@@ -104,8 +104,8 @@ export const FeaturesOverview = () => {
           passHref
           href={`${feature.routes?.[0].path}?scroll=true`}
         >
-          <Feature icon={icons[feature.title] ?? null} title={feature.title}>
-            {feature.summarize
+          <Feature icon={icons[feature.title as keyof typeof icons] ?? null} title={feature.title}>
+            {(feature as any).summarize
               ? `${feature.routes.length} ${changeFeatureText(feature.path)}`
               : null}
           </Feature>

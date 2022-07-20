@@ -10,7 +10,7 @@ import {
   ViteSvg,
 } from './framework-svg'
 
-const FrameworkLink = (props) => {
+const FrameworkLink = (props:any) => {
   const { accentColor, href, children, name } = props
   return (
     <Link passHref href={href}>

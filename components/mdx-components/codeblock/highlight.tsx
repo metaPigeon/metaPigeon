@@ -13,7 +13,7 @@ const calculateLinesToHighlight = (meta: string) => {
   if (!RE.test(meta)) {
     return () => false
   }
-  const lineNumbers = RE.exec(meta)[1]
+  const lineNumbers = RE.exec(meta)![1]
     .split(`,`)
     .map((v) => v.split(`-`).map((x) => parseInt(x, 10)))
 
@@ -41,7 +41,7 @@ function Highlight({
   showLines,
   ...props
 }: HighlightProps) {
-  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+  const shouldHighlightLine = calculateLinesToHighlight(metastring!)
 
   return (
     <BaseHighlight

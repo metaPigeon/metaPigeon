@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 
-type ColorPaletteProps = FlexProps & { color?: string; name?: string }
+type ColorPaletteProps = FlexProps & { color: string; name?: string }
 
 export const ColorPalette = (props: ColorPaletteProps) => {
   const { color, name, ...rest } = props

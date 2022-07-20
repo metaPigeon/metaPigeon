@@ -28,7 +28,7 @@ const CodeBlock = ({ path, code, showLineNumbers = false }: CodeBlockProps) => {
   const { sandpack } = useSandpack()
 
   return (
-    <Stack bg={theme.palette.defaultBackground} rounded='md' my={4}>
+    <Stack bg={(theme as any).palette.defaultBackground} rounded='md' my={4}>
       {path && (
         <HStack px={4} pt={2} justifyContent='space-between'>
           <Text color='purple.300'>{formatFilePath(path)}</Text>
