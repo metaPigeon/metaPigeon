@@ -34,17 +34,23 @@ const BlogItem = ({
   children: React.ReactNode;
   frontMatter: any;
 }) => {
+  const bg= useColorModeValue('white', 'gray.800')
   if (!frontMatter) return null;
   const { headings = [] } = frontMatter;
+  
   return (
     <Box
       maxWidth={1140}
       mx="auto"
       boxShadow="0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%)"
       position={"relative"}
-      borderRadius="0.5rem"
     >
-      <Box id="content" px={3} mx="auto" minH="76vh">
+      <Box id="content"  
+       mx="auto" mb="20px" minH="76vh" 
+       borderRadius="0.5rem"
+       mt={'-50px'}
+       bg={bg}
+       >
         <Flex>
           <Box
             minW="0"

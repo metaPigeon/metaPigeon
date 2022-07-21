@@ -22,11 +22,11 @@ import {
   Image,
   chakra
 } from "@chakra-ui/react";
-
 import NextLink from 'next/link'
 
 const Blog = () => {
   // console.log(allBlogs, 'ksjjflkl')
+  const bg= useColorModeValue('white', 'gray.800')
   return (
     <Box
       maxWidth={1140}
@@ -34,6 +34,8 @@ const Blog = () => {
       boxShadow="0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%)"
       position={'relative'}
       borderRadius="0.5rem"
+      bg={bg}
+      
     >
       <Flex>
         <Flex w={{ base: '100%', md: '82%' }} mx="auto">
