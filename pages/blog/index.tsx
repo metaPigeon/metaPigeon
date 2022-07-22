@@ -25,31 +25,30 @@ import {
 import NextLink from 'next/link'
 
 const Blog = () => {
-  // console.log(allBlogs, 'ksjjflkl')
   const bg= useColorModeValue('white', 'gray.800')
+  console.log(allBlogs)
   return (
     <Box
-      maxWidth={1140}
+      maxWidth={{base: '540px', md: 1140}}
       mx="auto"
       boxShadow="0 12px 15px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%)"
       position={'relative'}
       borderRadius="0.5rem"
       bg={bg}
-      
     >
       <Flex>
         <Flex w={{ base: '100%', md: '82%' }} mx="auto">
-          <Stack my='12' spacing='20' direction={"column"} w={'100%'}>
+          <Stack my='12' spacing='14' direction={"column"} w={'100%'} px={3}>
             {allBlogs.map((item) => (
-              <Flex key={item._id}>
-                <NextLink href={item.url}>
+              <Flex key={item._id} flexWrap="wrap">
+                <NextLink href={item.url} passHref>
                   <Link _hover={{ textDecor: 'none' }} flex={{base: '0 0 100%', md: '0 0 33.33%'}} px={15}>
                     <Image
                       width={'100%'}
                       boxShadow={'0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%)'}
                       height="10rem"
                       objectFit={'cover'}
-                      src="https://rmt.dogedoge.com/fetch/fluid/storage/hello-fluid/cover.png?w=480&fmt=webp"
+                      src={item.img}
                       alt=""
                     />
                   </Link>
@@ -76,7 +75,7 @@ const Blog = () => {
                     </Box>
                     <Box>
                       <chakra.i />
-                      <chakra.span>主题描述</chakra.span>
+                      {/* <chakra.span>主题描述</chakra.span> */}
                     </Box>
                   </Stack>
                 </Box>

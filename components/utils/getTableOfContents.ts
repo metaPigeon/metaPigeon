@@ -1,7 +1,7 @@
 import slugger from 'github-slugger'
 
 export function getTableOfContents(mdxContent) {
-  const regexp = new RegExp(/^(### |## )(.*)((\r\n)|\n)/, 'gm')
+  const regexp = new RegExp(/^(### |## )(.*)(\r\n|\n)/, 'gm')
   const headings = [...mdxContent.matchAll(regexp)]
   let tableOfContents = [] as any[]
 

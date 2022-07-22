@@ -38,13 +38,14 @@ export default function WithSubnavigation() {
           color={useColorModeValue("gray.600", "white")}
           px={{ base: 4 }}
           py={navCollapse ? 1 : 3}
-          // background={navCollapse ? 'rgba(47,65,84,0.7)' : 'transparent'}
+          // 
           // backdropBlur={ navCollapse ? 'blur(3px)' : 'none'}
           // borderBottom={1}
           backdropFilter="auto"
           backdropBlur={navCollapse ? "3px" : "none"}
           borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.900")}
+          borderColor={useColorModeValue("blackAlpha.300", "gray.900")}
+          background={navCollapse ? 'rgba(47,65,84,0.7)' : 'transparent'}
           boxShadow="0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%)"
           align={"center"}
           transition="background 0.5s ease-in-out, padding 0.5s ease-in-out"
@@ -54,9 +55,13 @@ export default function WithSubnavigation() {
             flex={{ base: 1, md: "auto" }}
             ml={{ base: -2 }}
             display={{ base: "flex", md: "none" }}
+            color={useColorModeValue("white", "#d0d0d0")}
           >
             <IconButton
               onClick={onToggle}
+              _hover={{
+                background: 'transparent'
+              }}
               icon={
                 isOpen ? (
                   <CloseIcon w={3} h={3} />
@@ -64,8 +69,11 @@ export default function WithSubnavigation() {
                   <HamburgerIcon w={5} h={5} />
                 )
               }
-              variant={"ghost"}
+              // colorScheme='white'
+              // variant={"ghost"}
               aria-label={"Toggle Navigation"}
+              bg={'transparent'}
+              // bg={'transparent'}
             />
           </Flex>
           <Flex
@@ -76,7 +84,7 @@ export default function WithSubnavigation() {
             <Text
               textAlign={useBreakpointValue({ base: "center", md: "center" })}
               fontFamily={"heading"}
-              color={useColorModeValue("gray.800", "white")}
+              color={useColorModeValue("white", "#d0d0d0")}
             >
               Logo
             </Text>
@@ -117,15 +125,23 @@ export default function WithSubnavigation() {
         ref={bannerRef}
         w={"100%"}
         h={"70vh"}
-        backgroundImage="https://dogefs.s3.ladydaily.com/fluid/storage/bg/vdysjx.png?w=1920&fmt=webp"
-      ></Box>
+        backgroundSize="cover"
+        backgroundPosition={"center center"}
+        // backgroundImage="https://steamuserimages-a.akamaihd.net/ugc/1539625686958647205/7FBEA808C786F87469E017B567E91F99E5981786/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+        backgroundImage={"/header/20191231163322.jpg-slim"}
+
+      >
+        <Box h={'100%'} background="rgba(0,0,0,.3)">
+
+        </Box>
+      </Box>
     </Box>
   );
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
+  const linkColor = useColorModeValue("white", "gray.200");
+  const linkHoverColor = useColorModeValue("white", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
@@ -288,10 +304,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "首页",
-    href: "/",
-  },
+  // {
+  //   label: "首页",
+  //   href: "/",
+  // },
   {
     label: "博客",
     href: "/blog",
