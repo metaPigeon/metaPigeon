@@ -49,6 +49,7 @@ const BlogItem = ({
        mx="auto" mb="20px" minH="76vh" 
        borderRadius="0.5rem"
        mt={'-50px'}
+       pb={8}
        bg={bg}
        >
         <Flex>

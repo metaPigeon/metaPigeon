@@ -4,7 +4,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import { MDXComponents } from 'components/mdx-components'
 import BlogItemLayout from 'components/layout/components/blogItem'
 // import { getMember } from 'utils/get-all-members'
-console.log(allBlogs) 
+
 export default function Page({
   blog,
 }: InferGetStaticPropsType<typeof getStaticProps>) {

@@ -1,0 +1,110 @@
+---
+title: 从分布条件类型到协变和逆变
+description: Intersection observer 的概念和用法
+tags: ['create-react-app']
+author: ldb
+date: 2020-07-23
+img: 'public'
+---
+
+之前在看ts的untils 实现时，发现了Exclude内置方法：
+```ts 
+type Exclude<T, U> = T extends U ? never : T
+type T1 = Exclude<'a'|'b'|'d','a'|'b'|'c'>  // 'b'|'a'
+```
+## 父子类型
+假设有以下类型
+```ts
+interface Animal {
+  age: number
+}
+
+interface Dog extends Animal {
+  bark(): void
+} 
+```
+Dog 继承于 Animal，拥有比 Animal 更多的方法。因此我们说 Animal 是父类型，Dog 是它的子类型。需要注意的是，子类型的属性比父类型更多、更具体：​
+
+-在类型系统中，属性更多的类型是子类型。
+-在集合论中，属性更少的集合是子集。
+
+但是6在联合类型中父子类型有点反直觉，`'a' | 'b' | 'c'` 是 `'a' | 'b'` 的父类型，因为前者包含的范围更广，而后者则更具体。​
+```ts
+type Parent = "a" | "b" | "c";
+type Child = "a" | "b";
+
+let parent: Parent;
+let child: Child;
+
+// 兼容
+parent = child
+
+// 不兼容，因为 parent 可能为 c，而 c 无法 assign 给 "a" | "b"
+child = parent
+```
+所以父类型比子类型有范围更广，另外 子类型一定可以赋值给父类型
+## extends
+extends 是在ts经常用到的关键字，
+`
+T extends U ? X : Y
+`
+以上代码的意思是: 如果 T 是 U 的子类型，那么结果为 X，否则结果为 Y
+
+###分布条件类型（Distributive conditional types）
+当T是联合类型时，extends会触发分配
+```ts
+'A'|'B' extends U //  "A" extends U | "B" extends U
+```
+看到这里也基本了解extends的用法。
+## 逆变和协变
+逆变和协变概念解释有点晦涩难懂，用通俗的语言解释就是：
+- 协变：允许子类型转换为父类型
+- 逆变：允许父类型转换为子类型
+
+### 协变
+在ts中，大多数转化都是协变，比如：
+```ts
+interface Animal {
+  age: number
+}
+
+interface Dog extends Animal {
+  bark(): void
+}
+let animal: Animal = { age: 12 };
+
+let dog: Dog = {
+  age: 12,
+  bark: () => {
+  }
+}
+// 兼容，能赋值成功，这就是一个协变
+animal = dog
+```
+### 逆变 
+逆变主要用作函数上：
+```ts
+let visitAnimal = (animal: Animal): Dog => {
+  animal.age;
+
+  return {
+    age: 12,
+    bark() {
+    }
+  }
+}
+
+let visitDog = (dog: Dog): Animal => {
+  dog.age;
+  dog.bark();
+
+  return {
+    age: 20
+  }
+}
+// 兼容
+visitDog = visitAnimal
+```
+根据以上例子，也有已下概念： 
+- 函数参数是逆变：Animal 变换成 Dog，父类型 -> 子类型
+- 函数返回值是协变：Dog 变成 Animal，子类型 -> 父类型
