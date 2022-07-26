@@ -1,0 +1,65 @@
+---
+title: 跨源资源共享（CROS）
+description:  URL主要由已下部分组成：protocol + :// + domainName + port + pathname + search + fragment 
+使用端口号会省略，http默认端口为80，https默认端口443。fragment改变不会触发页面刷新。
+tags: ['create-react-app']
+author: ldb
+date: 2020-07-25
+img: 'public'
+---
+
+## 什么是URL（Uniform Resource Locator）
+  URL主要由已下部分组成：protocol + :// + domainName + port + pathname + search + fragment
+  使用端口号会省略，http默认端口为80，https默认端口443。fragment改变不会触发页面刷新。
+  
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f2dbffc4ce54e2e8df4286c58fc42dc~tplv-k3u1fbpfcp-watermark.image?)
+## 同源和同站的定义
+### 同站定义
+完整站点：eTLD+1 就是有效顶级域名加前面域的部分
+相对于跨域，跨站在部分情况下会发送cookie，直接看下面图表：
+
+| 请求类型 | 实例 | strict | lax | None |
+| --- | --- | --- | --- | --- |
+| 链接 | ```<a href=""></a>``` | 不发送 | 发送 |发送 |
+| 预加载 | ```<link href=""></link>```  | 不发送|发送 | 发送|
+| get表单 | ```<form methon="get"></form>```  | 不发送| 发送 | 发送|
+| post表单 | ```<form methon="post"></form>```  | 不发送| 不发送 | 发送|
+| iframe表单 | ```<iframe src=""></iframe>```  | 不发送| 不发送 | 发送|
+| AJAX fetch | ```$.get()  fetch()```  | 不发送| 不发送 | 发送|
+| image | ```<img src />```  | 不发送| 不发送 | 发送|
+
+### 同源
+如果两个 URL 的 protocol、port (en-US) (如果有指定的话)和 host 都相同的话，则这两个 URL 是同源。
+如果请求不同源的资源就会发生跨域。
+- XMLHttpRequest 和fetch
+- Web 字体 (CSS 中通过 `@font-face` 使用跨源字体资源)
+- webgl
+- canvas不能调用 getImageData() toDataURL
+## CROS
+跨源资源共享是是基于http头的机制，该机制通过允许服务器标示除了它自己以外的其它 origin（域，协议和端口），使得浏览器允许这些 origin 访问加载自己的资源。CORS 则通过特定 HTTP 请求头和响应头参数来允许`XMLHttpRequest`和`Fetch API`执行跨源请求。
+### HTTP请求头
+发起`XMLHttpRequest`和`Fetch API`请求，浏览器会自动设置请求头已下请求头
+
+| 字段 | 含义 | 备注 |
+| --- | --- | --- |
+| Origin | 就是网站的源，不包含包含任何路径信息 | |
+| Access-Control-Request-Method | 预检请求中所使用的 HTTP 方法告诉服务器。 | 只用于预检请求 |
+| Access-Control-Request-Headers | 将实际请求所携带的首部字段告诉服务器。 | 只用于预检请求 |
+
+### HTTP 响应头
+
+服务器需要对允许跨域请求的响应返回以下请求头参数
+| 字段 | 含义 | 备注 |
+| --- | --- | --- |
+| Access-Control-Allow-Origin | 就是网站的源，允许访问该资源的外域 URI |不需要携带身份凭证的请求，可以用*代替 |
+| Access-Control-Expose-Headers| 预检请求中所使用的 HTTP 方法告诉服务器。 |  |
+| Access-Control-Request-Headers | 跨源访问只能拿到基本的头，要拿到其他头，需在这里设置 |  |
+| Access-Control-Max-Age | preflight请求的结果能够被缓存多久 | delta-seconds |
+| Access-Control-Allow-Credentials | 指定了实际的请求是否可以使用 credentials | |
+| Access-Control-Allow-Method | 用于preflight请求的响应，表明允许请求的方法 | |
+| Access-Control-Allow-Headers | 用于预检请求的响应。其指明了实际请求中允许携带的首部字段 | |
+
+
+## 参考
+https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_URL
+https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6

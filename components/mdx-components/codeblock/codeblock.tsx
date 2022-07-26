@@ -25,10 +25,11 @@ function CodeBlock(props) {
     children,
     viewlines,
     ln,
+    // preview = true,
     mountStylesheet = false,
   } = props.children.props
   const _live = live === 'true' || live === true
-
+  // const _preview = preview == 'true' || preview === true
   const language = className?.replace(/language-/, '')
   const rawCode = children.trim()
 
