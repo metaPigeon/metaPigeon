@@ -1,0 +1,64 @@
+---
+title: 什么是mdx
+description: 什么是mdx
+tags: ['create-react-app']
+author: ldb
+date: 2020-07-21
+img: 'public'
+---
+
+### 什么是mdx
+mdx就是md和jsx的结合，就是可以在md里面写jsx。这意味着在md里面可以实现很多酷炫的东西，比如：echarts图表，播放视频等等
+另外，mdx只依赖jsx，所以jsx运行环境都可以使用mdx（react，vue，preact）。
+
+## 如何使用
+mdx有多种实现方式：
+- 打包库集成
+- 使用 complier 去解析mdx文件
+- 使用 evalute 运行 raw mdx 字符串
+
+### 打包库继承
+
+打包库集(wepack、rollup)成是最简单的使用mdx方式，具体实现可以看文档
+[getting-started](https://mdxjs.com/docs/getting-started)
+这种方式是实现原理是，以webpack、React为例:
+1. wepack.config.js 添加`@mdx-js/loader`去解析mdx文件
+2. 生成一个包含jsx的文件， 默认输出 MDXCompoent
+3. import mdx文件时，相当于 import MDXCompoent
+
+### 使用 @mdx-js/mdx 库解析
+手动解析主要用到 `@mdx-js/mdx`包里面的api，`@mdx-js/mdx`主要有以下api
+`compile`、`compileSync`、`evalute`、`evaluteSync`、`run`、`runSync`、`createProcessor(options)`
+compile是把mdx 编译成js
+```jsx manual=true
+// 为方便用同步方法
+// compile(file, options)
+// file的类型 string, Buffer in UTF-8, vfile； options 有很多，更多查看文档
+// console.log(compileSync, 'jjslkdf')
+// import * as runtime from 'react/jsx-runtime.js'
+//  MdSettings , MdReceipt, MdGroupWork,
+const mdx = `
+## Hello, world!
+<MdReceipt />
+`
+const code = String(compileSync(mdx, {
+  outputFormat: 'function-body'
+}))
+const { default: MDXCompoent } = runSync(
+  code, runtime
+)
+
+const MDXCompoent1 = () => {
+  return (
+    <MDXCompoent components={{
+    h1: (props) => <chakra.h1 apply='mdx.h1' {...props} />,
+    h2: (props) => <chakra.h2 apply='mdx.h1' {...props} />,
+    MdReceipt,
+    MdReceipt,
+    MdGroupWork
+  }} />
+  )
+}
+render(MDXCompoent1)
+
+```

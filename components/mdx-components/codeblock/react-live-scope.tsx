@@ -21,6 +21,8 @@ import Lorem from 'react-lorem-component'
 import * as Loaders from 'react-spinners'
 import * as ReactTable from 'react-table'
 import CircleIcon from '../icon'
+import { evaluateSync, compileSync, runSync} from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime'
 
 const reactIcons = {
   MdSettings,
@@ -35,6 +37,13 @@ const reactIcons = {
   AiOutlineUser,
   FaFacebook,
   FaTwitter,
+}
+
+const mdx = {
+  evaluateSync,
+  compileSync,
+  runSync,
+  runtime
 }
 
 const StarIcon = (props) => (
@@ -56,6 +65,7 @@ const ReactLiveScope = {
   FocusLock,
   Lorem,
   CircleIcon,
+  ...mdx
 }
 
 export default ReactLiveScope

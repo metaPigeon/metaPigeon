@@ -8,7 +8,6 @@ import BlogItemLayout from 'components/layout/components/blogItem'
 export default function Page({
   blog,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(allBlogs)
   const Component = useMDXComponent(blog!.body.code)
   return (
     <BlogItemLayout frontMatter={blog!.frontMatter}>

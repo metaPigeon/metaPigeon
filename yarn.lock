@@ -1748,7 +1748,7 @@
     node-fetch "^3.0.0"
     vfile "^5.0.0"
 
-"@mdx-js/mdx@^2.0.0":
+"@mdx-js/mdx@^2.0.0", "@mdx-js/mdx@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-2.1.2.tgz#d13fb811809fda37967dc0eebd5bb36adce89a81"
   integrity sha512-ASN1GUH0gXsgJ2UD/Td7FzJo1SwFkkQ5V1i9at5o/ROra7brkyMcBsotsOWJWRzmXZaLw2uXWn4aN8B3PMNFMA==
