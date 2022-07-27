@@ -8,28 +8,30 @@ img: 'public'
 ---
 
 ### 什么是mdx
-mdx就是md和jsx的结合，就是可以在md里面写jsx。这意味着在md里面可以实现很多酷炫的东西，比如：echarts图表，播放视频等等
+mdx就是md和jsx的结合，就是可以在md里面写jsx。这意味着在md里面可以实现很多酷炫的东西，比如：echarts图表，播放视频等等。
 另外，mdx只依赖jsx，所以jsx运行环境都可以使用mdx（react，vue，preact）。
 
 ## 如何使用
 mdx有多种实现方式：
 - 打包库集成
-- 使用 complier 去解析mdx文件
-- 使用 evalute 运行 raw mdx 字符串
+- 使用 @mdx-js/mdx 库解析
 
 ### 打包库继承
 
-打包库集(wepack、rollup)成是最简单的使用mdx方式，具体实现可以看文档
-[getting-started](https://mdxjs.com/docs/getting-started)
-这种方式是实现原理是，以webpack、React为例:
+打包库集(wepack、rollup)是最简单的使用mdx方式，具体实现可以看[文档](https://mdxjs.com/docs/getting-started)
+这种实现方式原理是，以webpack、React为例:
 1. wepack.config.js 添加`@mdx-js/loader`去解析mdx文件
 2. 生成一个包含jsx的文件， 默认输出 MDXCompoent
 3. import mdx文件时，相当于 import MDXCompoent
 
 ### 使用 @mdx-js/mdx 库解析
-手动解析主要用到 `@mdx-js/mdx`包里面的api，`@mdx-js/mdx`主要有以下api
-`compile`、`compileSync`、`evalute`、`evaluteSync`、`run`、`runSync`、`createProcessor(options)`
-compile是把mdx 编译成js
+手动解析主要用到 `@mdx-js/mdx`包里面的api，`@mdx-js/mdx`主要有以下api:
+| api      | 同步方法 | 描述|
+| ----------- | ----------- | ----------- |
+| `compile`      | `compileSync`   | 把mdx转化成js，当`options.outputFormat: function-body`时， 可以使用 `run`去运行 |
+| `evalute`   | `evaluteSync`        | 相当于运行`compile` + `run`  |
+| `run` | `runSync` | `eval` compiled as `options.outputFormat: function-body`   |
+
 ```jsx manual=true
 // 为方便用同步方法
 // compile(file, options)
@@ -47,7 +49,6 @@ const code = String(compileSync(mdx, {
 const { default: MDXCompoent } = runSync(
   code, runtime
 )
-
 const MDXCompoent1 = () => {
   return (
     <MDXCompoent components={{
@@ -61,4 +62,74 @@ const MDXCompoent1 = () => {
 }
 render(MDXCompoent1)
 
+```
+### runSync的实现
+看到mdx文档对run 的介绍有这样一行字
+> ☢️ Danger: This evals JavaScript.
+看到这个在想 run是不是用new Function 来实现,先来打印complier出来的东西
+
+```js
+/*@jsxRuntime automatic @jsxImportSource react*/
+const {Fragment: _Fragment, jsx: _jsx, jsxs: _jsxs} = arguments[0];
+function _createMdxContent(props) {
+  const _components = Object.assign({
+    h2: "h2"
+  }, props.components), {MdReceipt} = _components;
+  if (!MdReceipt) _missingMdxReference("MdReceipt", true);
+  return _jsxs(_Fragment, {
+    children: [_jsx(_components.h2, {
+      children: "Hello, world!"
+    }), "\n", _jsx(MdReceipt, {})]
+  });
+}
+function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+    children: _jsx(_createMdxContent, props)
+  })) : _createMdxContent(props);
+}
+return {
+  default: MDXContent
+};
+function _missingMdxReference(id, component) {
+  throw new Error("Expected " + (component ? "component" : "object") + " `" + id + "` to be defined: you likely forgot to import, pass, or provide it.");
+}
+```
+所以可以写出一版：
+```js
+const simRunSync = (code, options) =>{
+  return new Function(code)(options)
+} 
+```
+试了可以运行，run异步方法想不出方法。来看看mdx对于这两个方法的源码。
+```js
+/** @type {new (code: string, ...args: Array<unknown>) => Function} **/
+const AsyncFunction = Object.getPrototypeOf(run).constructor
+
+/**
+ * Asynchronously run code.
+ *
+ * @param {{toString(): string}} file
+ *   JS document to run.
+ * @param {unknown} options
+ * @return {Promise<*>}
+ */
+export async function run(file, options) {
+  // V8 on Erbium.
+  /* c8 ignore next 2 */
+  return new AsyncFunction(String(file))(options)
+}
+
+/**
+ * Synchronously run code.
+ *
+ * @param {{toString(): string}} file
+ *   JS document to run.
+ * @param {unknown} options
+ * @return {*}
+ */
+export function runSync(file, options) {
+  // eslint-disable-next-line no-new-func
+  return new Function(String(file))(options)
+}
 ```
