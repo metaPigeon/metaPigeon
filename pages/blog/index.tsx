@@ -26,7 +26,13 @@ import NextLink from 'next/link'
 
 const Blog = () => {
   const bg= useColorModeValue('white', 'gray.800')
-  console.log(allBlogs)
+ const allBlogs1 = allBlogs.sort((a,b) => {
+  if(a.date > b.date) {
+    return -1
+  } else {
+    return 1
+  }
+})
   return (
     <Box
       maxWidth={{base: '540px', md: 1140}}
@@ -39,7 +45,7 @@ const Blog = () => {
       <Flex>
         <Flex w={{ base: '100%', md: '82%' }} mx="auto">
           <Stack my='12' spacing='14' direction={"column"} w={'100%'} px={3}>
-            {allBlogs.map((item) => (
+            {allBlogs1.map((item) => (
               <Flex key={item._id} flexWrap="wrap">
                 <NextLink href={item.url} passHref>
                   <Link _hover={{ textDecor: 'none' }} flex={{base: '0 0 100%', md: '0 0 33.33%'}} px={15}>

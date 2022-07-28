@@ -35,6 +35,7 @@ function TableOfContent(props: TableOfContentProps) {
       as='nav'
       aria-labelledby='toc-title'
       maxW='16rem'
+      minW="13rem"
       flexShrink={0}
       display={{ base: 'none', xl: 'block' }}
       position='sticky'
