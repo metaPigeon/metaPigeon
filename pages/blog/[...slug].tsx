@@ -35,5 +35,5 @@ export const getStaticProps = async (ctx:any) => {
   // const authorData = getMember(blog!.frontMatter.author)
   // blog!.frontMatter.authorData = authorData
 
-  return { props: { blog } }
+  return { props: { blog, title: blog?.title, date: blog?.date } }
 }
