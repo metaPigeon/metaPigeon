@@ -18,7 +18,8 @@ a {
 #banner {
   height: 100%;
   max-height: 100vw;
-  background: url("https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp") center center / cover no-repeat;
+  background: url("https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp")
+    center center / cover no-repeat;
   /* transform: translate3d(0px, 40px, 0px); */
 }
 
@@ -26,7 +27,7 @@ a {
   padding-top: 6px;
   padding-bottom: 6px;
   background: rgba(47, 65, 84, 0.7);
-  backdrop-filter: blur(3px)
+  backdrop-filter: blur(3px);
 }
 
 .navbar {
@@ -51,6 +52,7 @@ a {
     opacity: 0;
     transform: translate3d(0, 100%, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);

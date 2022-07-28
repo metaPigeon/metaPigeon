@@ -8,9 +8,14 @@ interface Iporps {
 }
 
 const AutoType = (props: Iporps) => {
-  const {className, text, delay = 100} = props
+  const {className, text, delay = 150} = props
   const [index, setIndex] = useState(0)
   const [typingText, setTypingText] = useState('')
+
+  useEffect(() => {
+    setTypingText('')
+    setIndex(0)
+  }, [text])
 
   useEffect(() => {
     let time
