@@ -26,8 +26,9 @@ import {
 } from "@chakra-ui/icons";
 import useBannerTranslate from "components/hooks/useBannerTranslate";
 import NextLink from "next/link";
+import AutoType from "components/common/autoType";
 
-export default function WithSubnavigation() {
+export default function WithSubnavigation({routerBanner}) {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const { bannerRef, navCollapse } = useBannerTranslate();
@@ -124,16 +125,24 @@ export default function WithSubnavigation() {
       <Box
         ref={bannerRef}
         w={"100%"}
-        h={"70vh"}
+        h={"100%"}
         backgroundSize="cover"
         backgroundPosition={"center center"}
         // backgroundImage="https://steamuserimages-a.akamaihd.net/ugc/1539625686958647205/7FBEA808C786F87469E017B567E91F99E5981786/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
         backgroundImage={"/header/20191231163322.jpg-slim"}
 
       >
-        <Box h={'100%'} background="rgba(0,0,0,.3)">
-
-        </Box>
+        <Flex h={'100%'} justifyContent="center" alignItems={'center'} background="rgba(0,0,0,.3)">
+           <Box 
+           maxW={'calc(960px - 6rem)'} 
+           w={'80%'} 
+           color={useColorModeValue('#fff','#d0d0d0')}
+           fontSize={{lg: '2rem',md: '1.5rem',base: '1.35rem'  }}
+           textAlign="center"
+           >
+              <AutoType text={routerBanner.title} />
+           </Box>
+        </Flex>
       </Box>
     </Box>
   );
@@ -150,8 +159,9 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <NextLink href={navItem.href ?? "#"}>
+              {/* <NextLink href={navItem.href ?? "#"} passHref> */}
                 <Link
+                  href={navItem.href}
                   p={2}
                   fontSize={"sm"}
                   fontWeight={500}
@@ -163,7 +173,7 @@ const DesktopNav = () => {
                 >
                   {navItem.label}
                 </Link>
-              </NextLink>
+              {/* </NextLink> */}
             </PopoverTrigger>
 
             {navItem.children && (
@@ -191,7 +201,7 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <NextLink href={href ?? "#"}>
+    <NextLink href={href ?? "#"} passHref>
       <Link
         role={"group"}
         display={"block"}
@@ -284,7 +294,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child) => (
-              <NextLink href={child.href ?? "#"} key={child.label}>
+              <NextLink  href={child.href ?? "#"} key={child.label} passHref>
                 <Link key={child.label} py={2}>
                   {child.label}
                 </Link>

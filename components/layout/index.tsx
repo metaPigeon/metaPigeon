@@ -1,12 +1,14 @@
 import Header from './components/header'
-import useBannerTranslate from "components/hooks/useBannerTranslate";
-import { chakra } from "@chakra-ui/react";
+interface routerBanner {
+  title: string,
+  date: string
+}
 
-const Layout:React.FC<{children: React.ReactNode}> = ({children}) => {
+const Layout:React.FC<{children: React.ReactNode, routerBanner:routerBanner}> = ({children, routerBanner}) => {
 
   return (
     <>
-    <Header  />
+    <Header routerBanner={routerBanner}  />
     <div className='main-container'>
       {children}
     </div>

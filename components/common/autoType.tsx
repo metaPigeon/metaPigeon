@@ -8,23 +8,27 @@ interface Iporps {
 }
 
 const AutoType = (props: Iporps) => {
-  const {className, text, delay = 200} = props
+  const {className, text, delay = 100} = props
   const [index, setIndex] = useState(0)
   const [typingText, setTypingText] = useState('')
 
   useEffect(() => {
+    let time
      if(index < text.length) {
-        setTimeout(() => {
+        time = setTimeout(() => {
           setTypingText(typingText + text[index])
            setIndex(index + 1)
         }, delay)
+     }
+     return () => {
+       window.clearTimeout(time)
      }
   }, [index])
 
   return (
     <chakra.div className={className}>
         <chakra.span>{typingText}</chakra.span>
-        <chakra.span animation={"0.1s infinite typeBlink"}>_</chakra.span>
+        <chakra.span animation={"1s infinite typeBlink"}>_</chakra.span>
     </chakra.div>
   )
 }
