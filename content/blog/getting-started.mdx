@@ -1,0 +1,34 @@
+---
+title: getting-started
+description: 这个网站是使用nextjs + contentlayer + chakrajs + mdx完成的。
+tags: ['create-react-app']
+date: 2020-07-11
+---
+很久之前就想建立一个博客网站，可以记录和分享自己的技术和困惑，分享自己的喜悦，记录下悲伤。。所以把建站提上日程，
+首先先明确我的需求：
+
+* 专注于创作，只要写mdx文件就行，自动生成页面
+* 可定制性，可以提供自己的React组件来扩展和自定义，可以增加额外页面
+* 纯前端技术，可以使用现代化JavaScript 生态系统工具。
+
+综合考虑，选择了使用nextjs + contentlayer + chakrajs + mdx完成开发，部署在vercel上
+## 和其他工具的对比
+### Gatsby
+Gatsby 是一个很优秀的文档框架，也可以实现全部的功能。但GraphQL 是 Gatsby 的核心内容，这带来较多的学习成本。对于一个博客页面，
+根本不需要GraphQL。
+
+### Docusaurus 
+Docusaurus 是一个下载即可以写文档的内容工具，拥有诸多开箱即用的功能。SEO友好、文档搜索、国际化都是它的有点。但是可定制性太差。
+虽然每个组件都可以swizzle重写，但是Docusaurus内置组件细粒度很高，重构起来很费劲。当然，如果你只想要个开箱即用的静态生成网站，Docusaurus
+也是个很好工具
+
+### 其他
+jekyll 是由ruby生成的静态网站生成器，也是一个很老的静态网站生成器，太老了而且非前端技术。
+VuePress 主要还是用于技术文档的编写。
+
+## 最后
+
+* 使用next可以完全使用React的生态系统，可以为每个页面编写组件，完全掌控自己的页面展示。
+* contentlayer把mdx文件转成可执行的js，比next插件更易于扩展和高效。
+* chakraUi 兼容next，暗黑模式和响应式很容易实现，样式很漂亮。
+
